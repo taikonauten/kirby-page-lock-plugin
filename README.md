@@ -15,6 +15,8 @@
 site/plugins/page-lock/
 ```
 
+By default this plugin uses the cache folder `site/cache` to store tracking information. Make sure that it is writable by PHP.
+
 ## Options
 
 There is no configuration needed, this plugin works out of the box.
@@ -23,6 +25,7 @@ Following options can be set in your config files:
 
 ```php
 // file location where to store tracking information
+// needs to be writable by PHP
 c::set(
   'plugin.pagelock.editinglogpath',
   $kirby->roots()->cache() . DS . 'page-lock.json');

@@ -131,10 +131,12 @@ class PageLockPlugin {
         } catch (Exception $e) {
         }
       } else {
-        // inject the page lock script too
-        $htmlInjection =
-          '<script src="/assets/plugins/page-lock/js/page-lock.js"></script>' .
-          $htmlInjection;
+        // inject the page lock script
+        $htmlInjection = sprintf(
+          '<script src="%s"></script>%s',
+          url('/assets/plugins/page-lock/js/page-lock.js'),
+          $htmlInjection
+        );
 
         if (($pos = strpos($output, '</body>')) !== false) {
           $output = substr_replace($output, $htmlInjection, $pos, 0);
@@ -210,7 +212,10 @@ class PageLockPlugin {
 
   public function getPageEditingLog($pageUrl) {
     $editingLog = $this->getEditingLog();
-    return $editingLog[$pageUrl];
+    if (isset($editingLog[$pageUrl])) {
+      return $editingLog[$pageUrl];
+    }
+    return [];
   }
 
   public function setPageEditingLog($pageUrl, $pageEditingLog) {
